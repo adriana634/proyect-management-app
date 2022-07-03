@@ -3,6 +3,8 @@ import Spinner from '../components/Spinner';
 import { useQuery } from '@apollo/client';
 import { GET_PROJECT } from '../queries/projectQueries';
 import ClientInfo from '../components/ClientInfo';
+import DeleteProjectButton from '../components/DeleteProjectButton';
+import EditProjectForm from '../components/EditProjectForm';
 
 export default function Project() {
     const { id } = useParams();
@@ -16,7 +18,7 @@ export default function Project() {
     return <>
         { !loading && !error && (
             <div className="mx-auto w-75 card p-5">
-                <Link to="/projects" className="btn btn-light btn-sm w-25 d-inline ms-auto">Back</Link>
+                <Link to="/" className="btn btn-light btn-sm w-25 d-inline ms-auto">Back</Link>
                 
                 <h1>{data.project.name}</h1>
                 <p>{data.project.description}</p>
@@ -29,6 +31,10 @@ export default function Project() {
                     email={data.project.client.email} 
                     phone={data.project.client.phone}
                 />
+
+                <EditProjectForm id={data.project.id} name={data.project.name} description={data.project.description} />
+
+                <DeleteProjectButton id={data.project.id} />
             </div>
 
         )}
